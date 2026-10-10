@@ -53,6 +53,17 @@ class MenuItem:
     category: str = ""
     nutrition: Nutrition | None = None
     tags: list[str] = field(default_factory=list)
+    # 门店原价 (元), 无优惠时的牌价; 为 0 表示接口未提供
+    original_price: float = 0.0
+    # 套餐的默认组成 (来自 query-meal-detail 的 rounds[].choices[].name)
+    components: list[str] = field(default_factory=list)
+    # 组成里未能匹配到营养数据的部分 (营养不完整时非空, 用于诚实标注)
+    nutrition_missing: list[str] = field(default_factory=list)
+
+    @property
+    def nutrition_complete(self) -> bool:
+        """营养是否完整可信 (组成全部命中营养库)。"""
+        return self.nutrition is not None and not self.nutrition_missing
 
     @property
     def kcal(self) -> float:
@@ -111,6 +122,10 @@ class Constraints:
     exclude: list[str] = field(default_factory=list)
     # 是否允许同一餐品重复
     allow_duplicates: bool = False
+    # 营养约束生效时, 是否只接受营养**完整**的餐品。
+    # True (默认) 时, 营养缺失/不完整的餐品不会进入解 —— 否则它们的
+    # 热量与蛋白会被低估, 让"达标"结论失真。
+    require_complete_nutrition: bool = True
 
     def validate(self) -> None:
         if self.kcal_min > self.kcal_max:

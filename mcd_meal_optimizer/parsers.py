@@ -18,12 +18,18 @@ MCP 工具返回的并不是结构化 JSON, 而是若干种「文本套 JSON / �
 
 3. ``available-coupons`` 的 ``- 优惠券标题：xxx`` 块列表。
 
-4. ``query-meals`` 的菜单 (字段名不固定, 采用宽容归一化)。
+4. ``query-meals`` 的 ``{"categories": [...], "meals": {code: {...}}}`` 结构
+   (:func:`parse_menu_payload`), 以及任意嵌套形态的宽容回退。
+
+5. ``query-meal-detail`` 的 ``data.rounds[].choices[]``, 用于还原套餐的
+   默认组成 (:func:`parse_meal_detail_components`), 从而让套餐也能拿到
+   营养数据 (组成单品求和)。
 """
 
 from __future__ import annotations
 
 import re
+from collections import Counter
 from typing import Any, Iterable
 
 from .models import Coupon, MenuItem, Nutrition
@@ -241,8 +247,234 @@ def _to_float(v: Any) -> float:
     return float(m.group(1)) if m else 0.0
 
 
+def parse_menu_payload(payload: Any) -> list[MenuItem]:
+    """解析 ``query-meals`` 的**真实**返回结构。
+
+    真实结构形如::
+
+        data = {
+          "categories": [{"name": "人气热卖", "meals": [{"code": "...", "tags": [...]}]}, ...],
+          "meals": {"9900005456": {"name": "麦辣鸡腿汉堡三件套",
+                                   "currentPrice": "33.5",
+                                   "originalPrice": "46"}, ...},
+        }
+
+    价格字段是可变的 ``currentPrice`` (元), 与 ``query-meal-detail`` 无关;
+    分类名需要从 ``categories`` 反查, 因为 ``meals`` 里不带分类。
+
+    当结构不是上述形态时, 回退到宽容的 :func:`normalize_menu`。
+    """
+    data = extract_data(payload)
+    if not isinstance(data, dict):
+        return normalize_menu(payload)
+
+    meals = data.get("meals")
+    if not isinstance(meals, dict) or not meals:
+        return normalize_menu(payload)
+
+    # -- 从 categories 反查每个 code 的分类名与标签
+    category_of: dict[str, str] = {}
+    tags_of: dict[str, list[str]] = {}
+    for cat in data.get("categories") or []:
+        if not isinstance(cat, dict):
+            continue
+        cname = str(cat.get("name") or "").strip()
+        for m in cat.get("meals") or []:
+            if not isinstance(m, dict):
+                continue
+            c = str(m.get("code") or "")
+            if not c:
+                continue
+            category_of.setdefault(c, cname)
+            tg = [str(t) for t in (m.get("tags") or []) if t]
+            if tg:
+                tags_of.setdefault(c, tg)
+
+    items: list[MenuItem] = []
+    for code, m in meals.items():
+        if not isinstance(m, dict):
+            continue
+        name = str(m.get("name") or "").strip()
+        if not name:
+            continue
+        price = _to_float(_first(m, ("currentPrice", "price", "salePrice"), 0))
+        original = _to_float(_first(m, ("originalPrice",), 0))
+        items.append(
+            MenuItem(
+                code=str(code),
+                name=name,
+                price=price,
+                category=category_of.get(str(code), ""),
+                tags=tags_of.get(str(code), []),
+                original_price=original,
+            )
+        )
+    return items
+
+
+def parse_meal_detail(payload: Any) -> dict[str, Any]:
+    """解析 ``query-meal-detail``: 返回 ``{"name": 精确名, "components": [...]}``。
+
+    关键点: ``query-meals`` 里的餐品名是**通用展示名** (如「薯条」「雪碧」
+    「牛奶」), 而 ``query-meal-detail`` 返回的是**带规格的精确 SKU 名**
+    (「中薯条」「雪碧（小杯）」「热牛奶中杯」)。营养库是按精确名建的,
+    所以单品的营养必须用 detail 的名字去匹配, 否则会因规格歧义全部落空。
+    """
+    data = extract_data(payload)
+    if not isinstance(data, dict):
+        return {"name": "", "components": []}
+    return {
+        "name": str(data.get("name") or "").strip(),
+        "components": parse_meal_detail_components(payload),
+    }
+
+
+def parse_meal_detail_components(payload: Any) -> list[str]:
+    """从 ``query-meal-detail`` 里取出套餐的**默认组成** (餐品名列表)。
+
+    返回结构形如::
+
+        data.rounds = [
+          {"name": "麦辣鸡腿汉堡", "choices": [{"name": "麦辣鸡腿汉堡",
+                                                "isDefault": 1, "quantity": 1}]},
+          {"name": "选择套餐内小食", "choices": [{"name": "中薯条", "isDefault": 1}, ...]},
+        ]
+
+    每个 round 取「默认项」: 优先 ``isDefault == 1``, 其次 ``quantity > 0``,
+    都没有则取第一项。饮品/小食选择轮次即由此还原成具体单品。
+    """
+    data = extract_data(payload)
+    if not isinstance(data, dict):
+        return []
+    out: list[str] = []
+    for rnd in data.get("rounds") or []:
+        if not isinstance(rnd, dict):
+            continue
+        choices = [c for c in (rnd.get("choices") or []) if isinstance(c, dict)]
+        if not choices:
+            continue
+        pick = None
+        for c in choices:
+            if c.get("isDefault") in (1, True, "1"):
+                pick = c
+                break
+        if pick is None:
+            for c in choices:
+                if (c.get("quantity") or 0) > 0:
+                    pick = c
+                    break
+        if pick is None:
+            pick = choices[0]
+        nm = str(pick.get("name") or "").strip()
+        if nm and nm not in out:
+            out.append(nm)
+    return out
+
+
+# ------------------------------------------------------------- 名称归一化
+
+_NAME_NOISE = re.compile(r"[\s\-—–_·、,，.。;；!！?？'\"“”‘’()（）\[\]【】{}<>《》/\\|]+")
+
+# 包装词: 不影响营养成分, 比对时剔除 ("100%苹果汁(盒装)" == "100%苹果汁")。
+_PACKAGING_WORDS = ("纸盒装", "盒装", "瓶装", "杯装", "袋装", "罐装", "听装")
+# 重量规格 "(60g)" / "500ml"
+_WEIGHT_RE = re.compile(r"\d+(?:\.\d+)?(?:kg|g|ml|毫升|克)")
+# 数量+容器 (一袋/2杯/3瓶...)。**故意不含「块」「个」「片」** ——
+# 快餐里块数是装量差异 (麦乐鸡4块 vs 5块), 剔除会造成误配。
+_COUNT_UNIT_RE = re.compile(r"[一二三四五六七八九十两\d]+(?:袋|盒|瓶|杯|罐|份|包|支)")
+
+# 佐料/周边: 不提供营养, 缺它们不算"营养不完整"。
+_NON_FOOD_RE = re.compile(
+    r"(?:酱|蘸料|调料|餐具|纸巾|吸管|优惠券|兑换券|优惠卡"
+    r"|帽|玩具|玩偶|公仔|贴纸|徽章|抱枕|卡套|挂件|徽章|手办)"
+)
+
+
+def normalize_food_name(name: Any) -> str:
+    """去掉空白/标点/连字符等噪声, 便于跨接口名称对齐。"""
+    return _NAME_NOISE.sub("", str(name or "")).lower()
+
+
+def _base_chars(name: Any) -> Counter:
+    """名称的**字符多重集**, 已剔除包装词与重量/数量规格。
+
+    用字符多重集而不是分词: 中文连写没有空格, ``可乐中杯`` 若按
+    ``[\\u4e00-\\u9fff]+`` 分词会得到整串, 无法处理词序差异; 字符
+    多重集天然忽略词序, 同时保留「大/小/中/冰/热」这类真正改变
+    营养的区分字。
+    """
+    s = normalize_food_name(name)
+    for w in _PACKAGING_WORDS:
+        s = s.replace(w, "")
+    s = _WEIGHT_RE.sub("", s)
+    s = _COUNT_UNIT_RE.sub("", s)
+    return Counter(s)
+
+
+def food_name_tokens(name: Any) -> tuple[str, ...]:
+    """名称的字符多重集 (排序后的字符元组), 供比较与调试。"""
+    return tuple(sorted(_base_chars(name).elements()))
+
+
+def is_non_food(name: Any) -> bool:
+    """是否为佐料 / 周边 / 餐具等**不提供营养**的条目。"""
+    return bool(_NON_FOOD_RE.search(str(name or "")))
+
+
+def match_nutrition_name(
+    name: str, table: dict[str, Nutrition]
+) -> tuple[str | None, float]:
+    """把菜单餐品名对齐到营养库键名, 返回 ``(键名, 置信度)``。
+
+    只接受**高置信**匹配 (字面相同 / 归一化相同 / 剔除包装与规格后字符
+    多重集相同), 不做模糊近似 —— 宁可标为「未收录」, 也不把
+    「冰牛奶中杯」错配成「热牛奶大杯」这类容量/口味不同的餐品。
+    """
+    if not name:
+        return None, 0.0
+    if name in table:
+        return name, 1.0
+
+    target_norm = normalize_food_name(name)
+    for key in table:
+        if key and normalize_food_name(key) == target_norm:
+            return key, 0.99
+
+    target_base = _base_chars(name)
+    if target_base:
+        for key in table:
+            if key and _base_chars(key) == target_base:
+                return key, 0.95
+    return None, 0.0
+
+
+def merge_component_nutrition(
+    components: list[str], table: dict[str, Nutrition]
+) -> tuple[Nutrition | None, list[str]]:
+    """把套餐组成逐个对齐营养库并求和。
+
+    返回 ``(营养合计, 未命中的组成名)``。佐料/周边 (酱、玩具、帽子)
+    不计入营养也不算缺失; 其余任何一个组成未命中都会出现在第二个
+    返回值里 —— 调用方据此把该餐品标为「营养不完整」, 而不是静默按
+    0 计算导致低估热量。
+    """
+    if not components:
+        return None, []
+    acc: Nutrition | None = None
+    missing: list[str] = []
+    for comp in components:
+        if is_non_food(comp):
+            continue
+        key, _ = match_nutrition_name(comp, table)
+        if key is None:
+            missing.append(comp)
+            continue
+        acc = table[key] if acc is None else acc + table[key]
+    return acc, missing
+
+
 def normalize_menu(payload: Any) -> list[MenuItem]:
-    """把 ``query-meals`` 的任意结构归一化成 :class:`MenuItem` 列表。"""
+    """宽容归一化: 任何含 name/price 的嵌套结构都尝试抽出餐品。"""
     items: list[MenuItem] = []
     seen: set[str] = set()
 
@@ -278,20 +510,18 @@ def normalize_menu(payload: Any) -> list[MenuItem]:
 def attach_nutrition(
     items: list[MenuItem], nutrition: dict[str, Nutrition]
 ) -> int:
-    """按名称把营养数据挂到菜单餐品上, 返回命中数量。"""
+    """按名称把营养数据挂到菜单餐品上, 返回命中数量。
+
+    只做高置信匹配 (见 :func:`match_nutrition_name`); 命中不了就留空,
+    由调用方决定是否走「套餐拆解」或标注为未收录。
+    """
     hit = 0
     for it in items:
         if it.nutrition:
             continue
-        n = nutrition.get(it.name)
-        if n is None:
-            # 宽松匹配: 菜单名包含营养表名, 或反之
-            for key, value in nutrition.items():
-                if key and (key in it.name or it.name in key) and abs(len(key) - len(it.name)) <= 4:
-                    n = value
-                    break
-        if n is not None:
-            it.nutrition = n
+        key, _ = match_nutrition_name(it.name, nutrition)
+        if key is not None:
+            it.nutrition = nutrition[key]
             hit += 1
     return hit
 

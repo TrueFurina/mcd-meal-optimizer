@@ -48,7 +48,19 @@ def _order_discount(subtotal: float, coupons: Iterable[Coupon]) -> tuple[float, 
     return best_d, best_t
 
 
+def nutrition_constraints_active(cons: Constraints) -> bool:
+    """是否启用了任何营养相关约束。"""
+    return cons.kcal_min > 0 or cons.protein_min > 0 or cons.kcal_max < 1e9
+
+
 def _filter_items(items: list[MenuItem], cons: Constraints) -> list[MenuItem]:
+    """筛出可参与求解的餐品。
+
+    营养约束生效时, 默认**只保留营养完整**的餐品: 缺营养的餐品会被
+    当作 0 kcal / 0 g 蛋白, 从而伪造出"达标"结论。这类餐品要么补齐
+    营养(拆解套餐组成), 要么排除出解。
+    """
+    need_nutrition = nutrition_constraints_active(cons)
     out = []
     for it in items:
         name = it.name
@@ -56,10 +68,19 @@ def _filter_items(items: list[MenuItem], cons: Constraints) -> list[MenuItem]:
             continue
         if it.price <= 0 and not it.nutrition:
             continue
+        if need_nutrition and cons.require_complete_nutrition and not it.nutrition_complete:
+            continue
         out.append(it)
     # 低价优先, 便于剪枝
     out.sort(key=lambda x: x.price)
     return out
+
+
+def excluded_by_nutrition(items: list[MenuItem], cons: Constraints) -> list[MenuItem]:
+    """返回因「营养不完整」被排除的餐品 (供诚实汇报)。"""
+    if not (nutrition_constraints_active(cons) and cons.require_complete_nutrition):
+        return []
+    return [it for it in items if not it.nutrition_complete]
 
 
 def _required_mask(item: MenuItem, keywords: list[str]) -> int:

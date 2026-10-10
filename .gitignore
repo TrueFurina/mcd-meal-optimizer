@@ -14,6 +14,9 @@ venv/
 .pytest_cache/
 .mypy_cache/
 
+# 运行期缓存 (套餐拆解结果, 可按需重建)
+.cache/
+
 # 编辑器 / 系统
 .vscode/
 .idea/
