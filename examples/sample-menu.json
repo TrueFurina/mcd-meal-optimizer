@@ -1,0 +1,622 @@
+{
+  "name": "麦当劳示例菜单 (营养数据来自 MCP, 价格为示例)",
+  "note": "价格仅为演示用示例值, 真实价格以 query-meals / calculate-price 返回为准。",
+  "count": 41,
+  "items": [
+    {
+      "code": "SAMPLE-001",
+      "name": "巨无霸",
+      "price": 25.5,
+      "category": "汉堡",
+      "nutrition": {
+        "energy_kj": 2146.0,
+        "energy_kcal": 513.0,
+        "protein": 27.0,
+        "fat": 26.0,
+        "carbohydrate": 42.0,
+        "sodium": 961.0,
+        "calcium": 171.0
+      }
+    },
+    {
+      "code": "SAMPLE-002",
+      "name": "双层吉士汉堡",
+      "price": 23.5,
+      "category": "汉堡",
+      "nutrition": {
+        "energy_kj": 1796.0,
+        "energy_kcal": 429.0,
+        "protein": 27.0,
+        "fat": 22.0,
+        "carbohydrate": 31.0,
+        "sodium": 1017.0,
+        "calcium": 232.0
+      }
+    },
+    {
+      "code": "SAMPLE-003",
+      "name": "吉士汉堡包",
+      "price": 15.5,
+      "category": "汉堡",
+      "nutrition": {
+        "energy_kj": 1231.0,
+        "energy_kcal": 294.0,
+        "protein": 16.0,
+        "fat": 12.0,
+        "carbohydrate": 30.0,
+        "sodium": 673.0,
+        "calcium": 144.0
+      }
+    },
+    {
+      "code": "SAMPLE-004",
+      "name": "麦香鸡",
+      "price": 15.5,
+      "category": "汉堡",
+      "nutrition": {
+        "energy_kj": 1546.0,
+        "energy_kcal": 369.0,
+        "protein": 15.0,
+        "fat": 17.0,
+        "carbohydrate": 39.0,
+        "sodium": 731.0,
+        "calcium": 73.0
+      }
+    },
+    {
+      "code": "SAMPLE-005",
+      "name": "麦香鱼",
+      "price": 16.5,
+      "category": "汉堡",
+      "nutrition": {
+        "energy_kj": 1359.0,
+        "energy_kcal": 325.0,
+        "protein": 16.0,
+        "fat": 13.0,
+        "carbohydrate": 35.0,
+        "sodium": 556.0,
+        "calcium": 99.0
+      }
+    },
+    {
+      "code": "SAMPLE-006",
+      "name": "麦辣鸡腿汉堡",
+      "price": 22.5,
+      "category": "汉堡",
+      "nutrition": {
+        "energy_kj": 2029.0,
+        "energy_kcal": 485.0,
+        "protein": 24.0,
+        "fat": 24.0,
+        "carbohydrate": 42.0,
+        "sodium": 1208.0,
+        "calcium": 154.0
+      }
+    },
+    {
+      "code": "SAMPLE-007",
+      "name": "板烧鸡腿堡",
+      "price": 20.5,
+      "category": "汉堡",
+      "nutrition": {
+        "energy_kj": 1638.0,
+        "energy_kcal": 391.0,
+        "protein": 23.0,
+        "fat": 17.0,
+        "carbohydrate": 35.0,
+        "sodium": 1041.0,
+        "calcium": 93.0
+      }
+    },
+    {
+      "code": "SAMPLE-008",
+      "name": "培根蔬萃双层牛堡",
+      "price": 24.5,
+      "category": "汉堡",
+      "nutrition": {
+        "energy_kj": 1850.0,
+        "energy_kcal": 442.0,
+        "protein": 24.0,
+        "fat": 23.0,
+        "carbohydrate": 34.0,
+        "sodium": 728.0,
+        "calcium": 73.0
+      }
+    },
+    {
+      "code": "SAMPLE-009",
+      "name": "原味板烧鸡腿麦满分",
+      "price": 19.5,
+      "category": "早餐",
+      "nutrition": {
+        "energy_kj": 1029.0,
+        "energy_kcal": 246.0,
+        "protein": 15.0,
+        "fat": 9.0,
+        "carbohydrate": 25.0,
+        "sodium": 611.0,
+        "calcium": 133.0
+      }
+    },
+    {
+      "code": "SAMPLE-010",
+      "name": "猪柳蛋麦满分",
+      "price": 21.5,
+      "category": "早餐",
+      "nutrition": {
+        "energy_kj": 1618.0,
+        "energy_kcal": 387.0,
+        "protein": 23.0,
+        "fat": 21.0,
+        "carbohydrate": 25.0,
+        "sodium": 846.0,
+        "calcium": 243.0
+      }
+    },
+    {
+      "code": "SAMPLE-011",
+      "name": "猪柳麦满分",
+      "price": 18.5,
+      "category": "早餐",
+      "nutrition": {
+        "energy_kj": 1288.0,
+        "energy_kcal": 308.0,
+        "protein": 16.0,
+        "fat": 16.0,
+        "carbohydrate": 24.0,
+        "sodium": 781.0,
+        "calcium": 213.0
+      }
+    },
+    {
+      "code": "SAMPLE-012",
+      "name": "大脆鸡扒麦满分",
+      "price": 20.5,
+      "category": "早餐",
+      "nutrition": {
+        "energy_kj": 1510.0,
+        "energy_kcal": 361.0,
+        "protein": 16.0,
+        "fat": 17.0,
+        "carbohydrate": 35.0,
+        "sodium": 804.0,
+        "calcium": 130.0
+      }
+    },
+    {
+      "code": "SAMPLE-013",
+      "name": "烟肉蛋麦满分",
+      "price": 19.5,
+      "category": "早餐",
+      "nutrition": {
+        "energy_kj": 1089.0,
+        "energy_kcal": 260.0,
+        "protein": 16.0,
+        "fat": 10.0,
+        "carbohydrate": 24.0,
+        "sodium": 483.0,
+        "calcium": 238.0
+      }
+    },
+    {
+      "code": "SAMPLE-014",
+      "name": "火腿扒麦满分",
+      "price": 18.5,
+      "category": "早餐",
+      "nutrition": {
+        "energy_kj": 1092.0,
+        "energy_kcal": 261.0,
+        "protein": 14.0,
+        "fat": 12.0,
+        "carbohydrate": 24.0,
+        "sodium": 608.0,
+        "calcium": 131.0
+      }
+    },
+    {
+      "code": "SAMPLE-015",
+      "name": "中薯条",
+      "price": 12.5,
+      "category": "小食",
+      "nutrition": {
+        "energy_kj": 1210.0,
+        "energy_kcal": 289.0,
+        "protein": 4.0,
+        "fat": 12.0,
+        "carbohydrate": 38.0,
+        "sodium": 165.0,
+        "calcium": 18.0
+      }
+    },
+    {
+      "code": "SAMPLE-016",
+      "name": "大薯条",
+      "price": 15.5,
+      "category": "小食",
+      "nutrition": {
+        "energy_kj": 1587.0,
+        "energy_kcal": 379.0,
+        "protein": 6.0,
+        "fat": 16.0,
+        "carbohydrate": 50.0,
+        "sodium": 216.0,
+        "calcium": 23.0
+      }
+    },
+    {
+      "code": "SAMPLE-017",
+      "name": "小薯条",
+      "price": 10.5,
+      "category": "小食",
+      "nutrition": {
+        "energy_kj": 877.0,
+        "energy_kcal": 210.0,
+        "protein": 3.0,
+        "fat": 9.0,
+        "carbohydrate": 28.0,
+        "sodium": 120.0,
+        "calcium": 13.0
+      }
+    },
+    {
+      "code": "SAMPLE-018",
+      "name": "麦乐鸡5块",
+      "price": 13.5,
+      "category": "小食",
+      "nutrition": {
+        "energy_kj": 890.0,
+        "energy_kcal": 213.0,
+        "protein": 12.0,
+        "fat": 12.0,
+        "carbohydrate": 13.0,
+        "sodium": 422.0,
+        "calcium": 9.0
+      }
+    },
+    {
+      "code": "SAMPLE-019",
+      "name": "麦辣鸡翅-2块",
+      "price": 12.5,
+      "category": "小食",
+      "nutrition": {
+        "energy_kj": 937.0,
+        "energy_kcal": 224.0,
+        "protein": 13.0,
+        "fat": 15.0,
+        "carbohydrate": 9.0,
+        "sodium": 537.0,
+        "calcium": 13.0
+      }
+    },
+    {
+      "code": "SAMPLE-020",
+      "name": "大杯玉米杯",
+      "price": 11.5,
+      "category": "小食",
+      "nutrition": {
+        "energy_kj": 365.0,
+        "energy_kcal": 87.0,
+        "protein": 4.0,
+        "fat": 1.0,
+        "carbohydrate": 12.0,
+        "sodium": 2.0,
+        "calcium": 10.0
+      }
+    },
+    {
+      "code": "SAMPLE-021",
+      "name": "小杯玉米杯",
+      "price": 9.5,
+      "category": "小食",
+      "nutrition": {
+        "energy_kj": 223.0,
+        "energy_kcal": 53.0,
+        "protein": 2.0,
+        "fat": 1.0,
+        "carbohydrate": 7.0,
+        "sodium": 1.0,
+        "calcium": 6.0
+      }
+    },
+    {
+      "code": "SAMPLE-022",
+      "name": "圆筒冰淇淋",
+      "price": 5.5,
+      "category": "甜品",
+      "nutrition": {
+        "energy_kj": 391.0,
+        "energy_kcal": 93.0,
+        "protein": 2.0,
+        "fat": 3.0,
+        "carbohydrate": 14.0,
+        "sodium": 36.0,
+        "calcium": 77.0
+      }
+    },
+    {
+      "code": "SAMPLE-023",
+      "name": "朱古力新地",
+      "price": 11.5,
+      "category": "甜品",
+      "nutrition": {
+        "energy_kj": 1178.0,
+        "energy_kcal": 282.0,
+        "protein": 5.0,
+        "fat": 9.0,
+        "carbohydrate": 44.0,
+        "sodium": 126.0,
+        "calcium": 182.0
+      }
+    },
+    {
+      "code": "SAMPLE-024",
+      "name": "草莓新地",
+      "price": 10.5,
+      "category": "甜品",
+      "nutrition": {
+        "energy_kj": 1027.0,
+        "energy_kcal": 245.0,
+        "protein": 4.0,
+        "fat": 6.0,
+        "carbohydrate": 43.0,
+        "sodium": 84.0,
+        "calcium": 158.0
+      }
+    },
+    {
+      "code": "SAMPLE-025",
+      "name": "奥利奥麦旋风",
+      "price": 12.5,
+      "category": "甜品",
+      "nutrition": {
+        "energy_kj": 1115.0,
+        "energy_kcal": 266.0,
+        "protein": 5.0,
+        "fat": 9.0,
+        "carbohydrate": 40.0,
+        "sodium": 116.0,
+        "calcium": 185.0
+      }
+    },
+    {
+      "code": "SAMPLE-026",
+      "name": "草莓麦旋风",
+      "price": 12.5,
+      "category": "甜品",
+      "nutrition": {
+        "energy_kj": 1234.0,
+        "energy_kcal": 295.0,
+        "protein": 6.0,
+        "fat": 9.0,
+        "carbohydrate": 47.0,
+        "sodium": 122.0,
+        "calcium": 186.0
+      }
+    },
+    {
+      "code": "SAMPLE-027",
+      "name": "香芋派",
+      "price": 8.5,
+      "category": "甜品",
+      "nutrition": {
+        "energy_kj": 971.0,
+        "energy_kcal": 232.0,
+        "protein": 2.0,
+        "fat": 12.0,
+        "carbohydrate": 28.0,
+        "sodium": 159.0,
+        "calcium": 7.0
+      }
+    },
+    {
+      "code": "SAMPLE-028",
+      "name": "菠萝派",
+      "price": 8.5,
+      "category": "甜品",
+      "nutrition": {
+        "energy_kj": 925.0,
+        "energy_kcal": 221.0,
+        "protein": 2.0,
+        "fat": 11.0,
+        "carbohydrate": 27.0,
+        "sodium": 147.0,
+        "calcium": 5.0
+      }
+    },
+    {
+      "code": "SAMPLE-029",
+      "name": "可乐中杯",
+      "price": 10.5,
+      "category": "饮料",
+      "nutrition": {
+        "energy_kj": 616.0,
+        "energy_kcal": 147.0,
+        "protein": 0.0,
+        "fat": 0.0,
+        "carbohydrate": 36.0,
+        "sodium": 0.0,
+        "calcium": 10.0
+      }
+    },
+    {
+      "code": "SAMPLE-030",
+      "name": "可乐大杯",
+      "price": 12.5,
+      "category": "饮料",
+      "nutrition": {
+        "energy_kj": 936.0,
+        "energy_kcal": 224.0,
+        "protein": 0.0,
+        "fat": 0.0,
+        "carbohydrate": 55.0,
+        "sodium": 0.0,
+        "calcium": 15.0
+      }
+    },
+    {
+      "code": "SAMPLE-031",
+      "name": "可乐小杯",
+      "price": 8.5,
+      "category": "饮料",
+      "nutrition": {
+        "energy_kj": 446.0,
+        "energy_kcal": 107.0,
+        "protein": 0.0,
+        "fat": 0.0,
+        "carbohydrate": 26.0,
+        "sodium": 0.0,
+        "calcium": 7.0
+      }
+    },
+    {
+      "code": "SAMPLE-032",
+      "name": "中杯怡泉+C",
+      "price": 10.5,
+      "category": "饮料",
+      "nutrition": {
+        "energy_kj": 461.0,
+        "energy_kcal": 110.0,
+        "protein": 0.0,
+        "fat": 0.0,
+        "carbohydrate": 27.0,
+        "sodium": 0.0,
+        "calcium": 0.0
+      }
+    },
+    {
+      "code": "SAMPLE-033",
+      "name": "大杯怡泉+C",
+      "price": 12.5,
+      "category": "饮料",
+      "nutrition": {
+        "energy_kj": 701.0,
+        "energy_kcal": 168.0,
+        "protein": 0.0,
+        "fat": 0.0,
+        "carbohydrate": 41.0,
+        "sodium": 0.0,
+        "calcium": 0.0
+      }
+    },
+    {
+      "code": "SAMPLE-034",
+      "name": "冰美式中杯",
+      "price": 17.0,
+      "category": "饮料",
+      "nutrition": {
+        "energy_kj": 54.0,
+        "energy_kcal": 13.0,
+        "protein": 1.0,
+        "fat": 0.0,
+        "carbohydrate": 2.0,
+        "sodium": 0.0,
+        "calcium": 7.0
+      }
+    },
+    {
+      "code": "SAMPLE-035",
+      "name": "热美式中杯",
+      "price": 17.0,
+      "category": "饮料",
+      "nutrition": {
+        "energy_kj": 54.0,
+        "energy_kcal": 13.0,
+        "protein": 1.0,
+        "fat": 0.0,
+        "carbohydrate": 2.0,
+        "sodium": 0.0,
+        "calcium": 7.0
+      }
+    },
+    {
+      "code": "SAMPLE-036",
+      "name": "冰奶铁中杯",
+      "price": 20.0,
+      "category": "饮料",
+      "nutrition": {
+        "energy_kj": 618.0,
+        "energy_kcal": 148.0,
+        "protein": 8.0,
+        "fat": 7.0,
+        "carbohydrate": 13.0,
+        "sodium": 77.0,
+        "calcium": 251.0
+      }
+    },
+    {
+      "code": "SAMPLE-037",
+      "name": "热奶铁中杯",
+      "price": 20.0,
+      "category": "饮料",
+      "nutrition": {
+        "energy_kj": 779.0,
+        "energy_kcal": 186.0,
+        "protein": 11.0,
+        "fat": 8.0,
+        "carbohydrate": 17.0,
+        "sodium": 99.0,
+        "calcium": 320.0
+      }
+    },
+    {
+      "code": "SAMPLE-038",
+      "name": "大杯鲜萃咖啡",
+      "price": 18.0,
+      "category": "饮料",
+      "nutrition": {
+        "energy_kj": 54.0,
+        "energy_kcal": 13.0,
+        "protein": 1.0,
+        "fat": 0.0,
+        "carbohydrate": 0.0,
+        "sodium": 3.0,
+        "calcium": 8.0
+      }
+    },
+    {
+      "code": "SAMPLE-039",
+      "name": "小杯鲜萃咖啡",
+      "price": 14.0,
+      "category": "饮料",
+      "nutrition": {
+        "energy_kj": 63.0,
+        "energy_kcal": 15.0,
+        "protein": 1.0,
+        "fat": 0.0,
+        "carbohydrate": 3.0,
+        "sodium": 2.0,
+        "calcium": 6.0
+      }
+    },
+    {
+      "code": "SAMPLE-040",
+      "name": "鲜蔬蛋沙拉叠叠卷",
+      "price": 16.5,
+      "category": "卷类",
+      "nutrition": {
+        "energy_kj": 1114.0,
+        "energy_kcal": 266.0,
+        "protein": 11.0,
+        "fat": 14.0,
+        "carbohydrate": 24.0,
+        "sodium": 518.0,
+        "calcium": 62.0
+      }
+    },
+    {
+      "code": "SAMPLE-041",
+      "name": "鸡肉蛋沙拉叠叠卷",
+      "price": 18.5,
+      "category": "卷类",
+      "nutrition": {
+        "energy_kj": 1621.0,
+        "energy_kcal": 387.0,
+        "protein": 17.0,
+        "fat": 21.0,
+        "carbohydrate": 31.0,
+        "sodium": 842.0,
+        "calcium": 67.0
+      }
+    }
+  ]
+}

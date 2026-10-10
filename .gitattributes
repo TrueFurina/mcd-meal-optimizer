@@ -1,0 +1,11 @@
+# 统一以 LF 存储与检出, 避免 Windows 下 CRLF 转换改变文件字节。
+# 尤其重要: CONTEST_DECLARATION.md 为官方原文, 必须逐字节一致。
+* text=auto eol=lf
+
+# 二进制文件不做转换
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.zip binary

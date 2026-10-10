@@ -1,0 +1,8 @@
+# 本项目零第三方运行时依赖 (仅用 Python 标准库)。
+# 该文件保留用于声明 Python 版本要求与可选的开发依赖。
+
+# 运行要求: Python >= 3.10 (使用 PEP 604 联合类型注解)
+#   python --version
+
+# 可选: 开发/测试 (标准库 unittest 已足够, 无需安装)
+#   python -m unittest discover -s tests -t .
