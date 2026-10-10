@@ -168,6 +168,34 @@ SSE 两种响应体。工具返回的 `content[0].text` 里混着说明文字与
 **直接抛 `OrderConfirmRequired`**,且不会发出任何请求;CLI 层对应 `--confirm`
 开关。这条约束有单元测试断言(「拒绝执行」+「未发出请求」两条都测)。
 
+#### 建单 → 撤单的真实契约(已实测闭合)
+
+为确认字段语义,项目在真实门店 `1450713` 上完整跑过一次
+**建单 → 撤单**,并用 `query-order` 独立复核终态:
+
+| 阶段 | Tool | 关键返回 |
+| --- | --- | --- |
+| 建单 | `create-order` | `orderId=1030657600000754933792618028`,`orderStatus=待支付` / `status=10`,`expirePayTime` 15 分钟后,`payH5Url` 支付入口 |
+| 撤单 | `cancel-order` | `{"cancelResult": true, "orderId": "..."}` |
+| 复核 | `query-order` | `orderStatus=订单已取消` / `status=60` |
+
+实测确认的字段与坑点:
+
+- **订单状态码**:`10` = 待支付,`60` = 已取消。
+- **金额一致性**:`totalAmount == realTotalAmount == "23.8"`,与
+  `calculate-price` 的 `price` 逐分吻合(`23.8` 元)。求解器预测价 = 真实成交价。
+- **套餐组成随订单返回**:`orderDetail.orderProductList[].comboItemList`
+  给出 `麦麦脆汁鸡-琵琶腿 + 韩式烟熏芝士风味酱`,与 `query-meal-detail`
+  的默认组成一致 —— 说明拆解逻辑与官方口径对齐。
+- **`takeWay` 取值**:到店自取下下单传 `takeWayCode=eat-in`,订单回显
+  `takeWay="堂食"`;`beCode` 不传(传了报错)。
+- **`takeWayCode` 来源**:必须取 `calculate-price` 返回的
+  `takeWayList[].code`,不要自己硬编码字符串。
+- **撤单原因码**:`cancelReasonCode=1`(改主意)可用;完整取值
+  1 改主意 / 2 重复下单 / 3 点错 / 4 地址错 / 5 时间错 / -1 其它。
+
+> 该订单已撤销、未支付、不产生扣费;仓库中仅保留订单号用于说明字段语义。
+
 ### 2.6 上下文与账号
 
 | Tool | 用途 |
@@ -290,6 +318,11 @@ python -m mcd_meal_optimizer nutrition --query 板烧 --top 10
 python -m mcd_meal_optimizer plan --store-code 1450713 --price-check
 python -m mcd_meal_optimizer price --store-code 1450713 --item 9900005456
 python -m mcd_meal_optimizer order --store-code 1450713 --item 9900005456
+
+# 真实建单 (必须显式 --confirm) 与撤单
+python -m mcd_meal_optimizer order --store-code 1450713 \
+    --item 9900016078 --item 9900016077 --confirm
+python -m mcd_meal_optimizer cancel --order-id <订单号> --reason 1
 
 # 导出真实门店快照 (供离线复现)
 python scripts/snapshot_store.py --city 上海

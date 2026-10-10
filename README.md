@@ -195,6 +195,47 @@ $ python -m mcd_meal_optimizer order --store-code 1450713 --item 9900005456 --it
 真实建单需要 `--confirm`;代码层面 `submit()` 在未确认时**直接抛异常**,
 且不会向 `create-order` 发出任何请求(有测试覆盖)。
 
+### 端到端实测:建单 → 撤单(全链路已跑通)
+
+下单链路不是"写完就算",而是**真实建单一次并立即撤销**,确认接口契约与
+字段含义都对得上:
+
+```console
+$ python -m mcd_meal_optimizer order --store-code 1450713 \
+      --item 9900016078 --item 9900016077 --confirm
+## 订单已创建
+- 订单号: 1030657600000754933792618028
+- 应付: ¥23.80
+- 支付入口: https://m.mcd.cn/mcp/scanToPay?orderId=...
+```
+
+创建后立刻撤销(`--reason 1` = 改主意),并用 `query-order` 独立复核终态:
+
+```console
+$ python -m mcd_meal_optimizer cancel --order-id 1030657600000754933792618028 --reason 1
+订单 1030657600000754933792618028: 已取消
+
+$ python -m mcd_meal_optimizer cancel ... --json   # 接口返回
+{ "cancelResult": true, "orderId": "1030657600000754933792618028" }
+
+# query-order 独立复核
+{ "orderId": "1030657600000754933792618028",
+  "orderStatus": "订单已取消", "status": "60",
+  "totalAmount": "23.8", "realTotalAmount": "23.8" }
+```
+
+本次实测确认的接口行为(易踩,特此记录):
+
+| 观察 | 说明 |
+| --- | --- |
+| `create-order` 返回 `orderStatus=待支付 / status=10` | 只建**未支付**订单,`expirePayTime` 为 15 分钟后 |
+| 金额一致 | `totalAmount = realTotalAmount = 23.8`,与 `calculate-price` 逐分吻合 |
+| `takeWay="堂食"` | 由 `calculate-price` 的 `takeWayList` 推导(`eat-in`),下单未传 `beCode` |
+| `cancel-order` 幂等语义 | 返回 `cancelResult: true`;`status` 变为 `60`(**已取消**) |
+| 订单明细含套餐组成 | `comboItemList` 给出 `麦麦脆汁鸡-琵琶腿 + 韩式烟熏芝士风味酱`,与解析层一致 |
+
+> 上述订单已撤销,不会产生任何扣费。仓库内不保存订单号以外的任何个人数据。
+
 ### 离线复现:真实菜单快照
 
 仓库内 `examples/real-menu-1450713.json` 是上面那家门店的**完整真实快照**
