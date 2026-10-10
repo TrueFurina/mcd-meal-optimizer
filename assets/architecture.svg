@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 830" width="1280" height="830" role="img" aria-label="麦麦算盘架构总览">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a1120"/>
+      <stop offset="1" stop-color="#13243f"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#818cf8"/>
+    </linearGradient>
+  </defs>
+  <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">    <path d="M 0 0 L 10 5 L 0 10 z" fill="#263a5c"/>  </marker>
+  <rect width="1280" height="830" rx="18" fill="url(#bg)"/>
+  <text x="60" y="52" font-size="32" fill="#e8eefc" font-weight="800" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">麦麦算盘 · 架构总览</text>
+  <text x="1220" y="52" font-size="15" fill="#5f7291" font-weight="400" text-anchor="end" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">零第三方依赖 · Python 3.10+ · 求解器与取数解耦</text>
+  <line x1="60" y1="70" x2="1220" y2="70" stroke="#263a5c" stroke-width="1"/>
+  <text x="60" y="104" font-size="19" fill="#38bdf8" font-weight="700" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">①  数据层 · 麦当劳 MCP（Streamable HTTP · Bearer 鉴权 · 35 个工具）</text>
+  <rect x="40" y="118" width="1200" height="124" rx="14" fill="#0e1a2e" stroke="#203353" stroke-width="1"/>
+  <rect x="60" y="130" width="248" height="100" rx="12" fill="#152239" stroke="#1b2c4a" stroke-width="1"/>
+  <rect x="60" y="130" width="3.5" height="100" rx="1.75" fill="#38bdf8"/>
+  <text x="76" y="156" font-size="14.5" fill="#e8eefc" font-weight="600" text-anchor="start" font-family="&apos;Cascadia Code&apos;,&apos;SFMono-Regular&apos;,Consolas,&apos;Courier New&apos;,monospace">list-nutrition-foods</text>
+  <text x="76" y="181" font-size="13" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">158 款餐品营养数据</text>
+  <text x="76" y="198" font-size="13" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">热量/蛋白/脂肪/碳水/钠/钙</text>
+  <rect x="364" y="130" width="248" height="100" rx="12" fill="#152239" stroke="#1b2c4a" stroke-width="1"/>
+  <rect x="364" y="130" width="3.5" height="100" rx="1.75" fill="#38bdf8"/>
+  <text x="380" y="156" font-size="14.5" fill="#e8eefc" font-weight="600" text-anchor="start" font-family="&apos;Cascadia Code&apos;,&apos;SFMono-Regular&apos;,Consolas,&apos;Courier New&apos;,monospace">query-meals</text>
+  <text x="380" y="175" font-size="14.5" fill="#e8eefc" font-weight="600" text-anchor="start" font-family="&apos;Cascadia Code&apos;,&apos;SFMono-Regular&apos;,Consolas,&apos;Courier New&apos;,monospace">query-meal-detail</text>
+  <text x="380" y="200" font-size="13" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">121 项真实门店菜单</text>
+  <text x="380" y="217" font-size="13" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">套餐默认组成 → 拆成单品</text>
+  <rect x="668" y="130" width="248" height="100" rx="12" fill="#152239" stroke="#1b2c4a" stroke-width="1"/>
+  <rect x="668" y="130" width="3.5" height="100" rx="1.75" fill="#38bdf8"/>
+  <text x="684" y="156" font-size="14.5" fill="#e8eefc" font-weight="600" text-anchor="start" font-family="&apos;Cascadia Code&apos;,&apos;SFMono-Regular&apos;,Consolas,&apos;Courier New&apos;,monospace">mall-points-products</text>
+  <text x="684" y="175" font-size="14.5" fill="#e8eefc" font-weight="600" text-anchor="start" font-family="&apos;Cascadia Code&apos;,&apos;SFMono-Regular&apos;,Consolas,&apos;Courier New&apos;,monospace">query-party-store</text>
+  <text x="684" y="200" font-size="13" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">门店发现（不依赖账号配置）</text>
+  <text x="684" y="217" font-size="13" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">城市 → 真实 storeCode</text>
+  <rect x="972" y="130" width="248" height="100" rx="12" fill="#152239" stroke="#1b2c4a" stroke-width="1"/>
+  <rect x="972" y="130" width="3.5" height="100" rx="1.75" fill="#38bdf8"/>
+  <text x="988" y="156" font-size="14.5" fill="#e8eefc" font-weight="600" text-anchor="start" font-family="&apos;Cascadia Code&apos;,&apos;SFMono-Regular&apos;,Consolas,&apos;Courier New&apos;,monospace">query-my-coupons</text>
+  <text x="988" y="175" font-size="14.5" fill="#e8eefc" font-weight="600" text-anchor="start" font-family="&apos;Cascadia Code&apos;,&apos;SFMono-Regular&apos;,Consolas,&apos;Courier New&apos;,monospace">available-coupons</text>
+  <text x="988" y="200" font-size="13" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">券池：满减/固定价/折扣</text>
+  <text x="988" y="217" font-size="13" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">→ 计入到手价</text>
+  <line x1="640" y1="242" x2="640" y2="292" stroke="#263a5c" stroke-width="2.2" marker-end="url(#ah)"/>
+  <rect x="556" y="252.0" width="168" height="30" rx="15" fill="#0d1729" stroke="#24395c" stroke-width="1"/>
+  <text x="640" y="272.0" font-size="14" fill="#9ad8ff" font-weight="600" text-anchor="middle" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">解析 / 归一化</text>
+  <text x="60" y="278" font-size="19" fill="#38bdf8" font-weight="700" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">②  解析层 · parsers.py（把非结构化返回变成结构化对象）</text>
+  <rect x="40" y="292" width="1200" height="108" rx="14" fill="#0e1a2e" stroke="#203353" stroke-width="1"/>
+  <rect x="60" y="304" width="224" height="84" rx="12" fill="#152239" stroke="#1b2c4a" stroke-width="1"/>
+  <rect x="60" y="304" width="3.5" height="84" rx="1.75" fill="#818cf8"/>
+  <text x="76" y="334" font-size="15.5" fill="#e8eefc" font-weight="600" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">紧凑表格解析</text>
+  <text x="76" y="358" font-size="13" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">缩进 CSV → 营养字典</text>
+  <text x="76" y="378" font-size="13" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif"></text>
+  <rect x="294" y="304" width="224" height="84" rx="12" fill="#152239" stroke="#1b2c4a" stroke-width="1"/>
+  <rect x="294" y="304" width="3.5" height="84" rx="1.75" fill="#818cf8"/>
+  <text x="310" y="334" font-size="15.5" fill="#e8eefc" font-weight="600" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">Markdown 券解析</text>
+  <text x="310" y="358" font-size="13" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">5 类券规则自动识别</text>
+  <text x="310" y="378" font-size="13" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif"></text>
+  <rect x="528" y="304" width="224" height="84" rx="12" fill="#152239" stroke="#1b2c4a" stroke-width="1"/>
+  <rect x="528" y="304" width="3.5" height="84" rx="1.75" fill="#818cf8"/>
+  <text x="544" y="334" font-size="15.5" fill="#e8eefc" font-weight="600" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">分类菜单归一</text>
+  <text x="544" y="358" font-size="13" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">categories 反查 meals</text>
+  <text x="544" y="378" font-size="13" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif"></text>
+  <rect x="762" y="304" width="224" height="84" rx="12" fill="#152239" stroke="#1b2c4a" stroke-width="1"/>
+  <rect x="762" y="304" width="3.5" height="84" rx="1.75" fill="#818cf8"/>
+  <text x="778" y="334" font-size="15.5" fill="#e8eefc" font-weight="600" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">套餐轮次拆解</text>
+  <text x="778" y="358" font-size="13" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">rounds.isDefault=1</text>
+  <text x="778" y="378" font-size="13" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif"></text>
+  <rect x="996" y="304" width="224" height="84" rx="12" fill="#152239" stroke="#1b2c4a" stroke-width="1"/>
+  <rect x="996" y="304" width="3.5" height="84" rx="1.75" fill="#818cf8"/>
+  <text x="1012" y="334" font-size="15.5" fill="#e8eefc" font-weight="600" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">名称多重集匹配</text>
+  <text x="1012" y="358" font-size="13" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">保留区分字，拒绝近似</text>
+  <text x="1012" y="378" font-size="13" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif"></text>
+  <line x1="640" y1="400" x2="640" y2="450" stroke="#263a5c" stroke-width="2.2" marker-end="url(#ah)"/>
+  <rect x="556" y="410.0" width="168" height="30" rx="15" fill="#0d1729" stroke="#24395c" stroke-width="1"/>
+  <text x="640" y="430.0" font-size="14" fill="#9ad8ff" font-weight="600" text-anchor="middle" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">约束建模</text>
+  <text x="60" y="436" font-size="19" fill="#38bdf8" font-weight="700" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">③  求解层 · optimizer.py（纯函数，不依赖网络）</text>
+  <rect x="40" y="450" width="1200" height="152" rx="14" fill="#0e1a2e" stroke="#203353" stroke-width="1"/>
+  <rect x="60" y="462" width="748" height="128" rx="12" fill="#152239" stroke="#1b2c4a" stroke-width="1"/>
+  <rect x="60" y="462" width="3.5" height="128" rx="1.75" fill="url(#accent)"/>
+  <text x="78" y="492" font-size="18" fill="#e8eefc" font-weight="700" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">双约束动态规划求解器</text>
+  <text x="78" y="518" font-size="14" fill="#9ad8ff" font-weight="400" text-anchor="start" font-family="&apos;Cascadia Code&apos;,&apos;SFMono-Regular&apos;,Consolas,&apos;Courier New&apos;,monospace">state = (热量桶, 蛋白桶, 必需掩码)</text>
+  <text x="78" y="539" font-size="14" fill="#9ad8ff" font-weight="400" text-anchor="start" font-family="&apos;Cascadia Code&apos;,&apos;SFMono-Regular&apos;,Consolas,&apos;Courier New&apos;,monospace">value = 最低到手价（已计入券后价）</text>
+  <text x="78" y="560" font-size="14" fill="#9ad8ff" font-weight="400" text-anchor="start" font-family="&apos;Cascadia Code&apos;,&apos;SFMono-Regular&apos;,Consolas,&apos;Courier New&apos;,monospace">objective = min_price / max_protein / best_value</text>
+  <text x="78" y="580" font-size="13" fill="#5f7291" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">DP vs 穷举 120 组随机差分：结果必须完全一致</text>
+  <rect x="832" y="462" width="388" height="128" rx="12" fill="#1e1a0e" stroke="#6b5518" stroke-width="1"/>
+  <rect x="832" y="462" width="3.5" height="128" rx="1.75" fill="#fbbf24"/>
+  <text x="850" y="492" font-size="18" fill="#fbbf24" font-weight="700" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">营养门禁（诚实边界）</text>
+  <text x="850" y="520" font-size="14" fill="#e8eefc" font-weight="400" text-anchor="start" font-family="&apos;Cascadia Code&apos;,&apos;SFMono-Regular&apos;,Consolas,&apos;Courier New&apos;,monospace">partial / none  →  排除出解</text>
+  <text x="850" y="544" font-size="13.5" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">绝不按 0 kcal / 0 g 参与计算</text>
+  <text x="850" y="566" font-size="13.5" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">否则会伪造出「营养达标」结论</text>
+  <line x1="640" y1="602" x2="640" y2="652" stroke="#263a5c" stroke-width="2.2" marker-end="url(#ah)"/>
+  <rect x="556" y="612.0" width="168" height="30" rx="15" fill="#0d1729" stroke="#24395c" stroke-width="1"/>
+  <text x="640" y="632.0" font-size="14" fill="#9ad8ff" font-weight="600" text-anchor="middle" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">输出 / 复核</text>
+  <text x="60" y="638" font-size="19" fill="#38bdf8" font-weight="700" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">④  输出层 · planner.py / cli.py</text>
+  <rect x="40" y="652" width="1200" height="144" rx="14" fill="#0e1a2e" stroke="#203353" stroke-width="1"/>
+  <rect x="60" y="666" width="248" height="112" rx="12" fill="#152239" stroke="#1b2c4a" stroke-width="1"/>
+  <rect x="60" y="666" width="3.5" height="112" rx="1.75" fill="#38bdf8"/>
+  <text x="76" y="700" font-size="16" fill="#e8eefc" font-weight="700" text-anchor="start" font-family="&apos;Cascadia Code&apos;,&apos;SFMono-Regular&apos;,Consolas,&apos;Courier New&apos;,monospace">方案 Top-N</text>
+  <text x="76" y="726" font-size="13.5" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">营养 / 价格 / 组成</text>
+  <text x="76" y="745" font-size="13.5" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">逐条可解释</text>
+  <rect x="364" y="666" width="248" height="112" rx="12" fill="#152239" stroke="#1b2c4a" stroke-width="1"/>
+  <rect x="364" y="666" width="3.5" height="112" rx="1.75" fill="#38bdf8"/>
+  <text x="380" y="700" font-size="16" fill="#e8eefc" font-weight="700" text-anchor="start" font-family="&apos;Cascadia Code&apos;,&apos;SFMono-Regular&apos;,Consolas,&apos;Courier New&apos;,monospace">calculate-price</text>
+  <text x="380" y="726" font-size="13.5" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">下单前强制复算</text>
+  <text x="380" y="745" font-size="13.5" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">预测价 = 真实成交价</text>
+  <rect x="668" y="666" width="248" height="112" rx="12" fill="#152239" stroke="#1b2c4a" stroke-width="1"/>
+  <rect x="668" y="666" width="3.5" height="112" rx="1.75" fill="#fbbf24"/>
+  <text x="684" y="700" font-size="16" fill="#e8eefc" font-weight="700" text-anchor="start" font-family="&apos;Cascadia Code&apos;,&apos;SFMono-Regular&apos;,Consolas,&apos;Courier New&apos;,monospace">--confirm 闸门</text>
+  <text x="684" y="726" font-size="13.5" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">未确认直接抛异常</text>
+  <text x="684" y="745" font-size="13.5" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">且不发出任何请求</text>
+  <rect x="972" y="666" width="248" height="112" rx="12" fill="#152239" stroke="#1b2c4a" stroke-width="1"/>
+  <rect x="972" y="666" width="3.5" height="112" rx="1.75" fill="#38bdf8"/>
+  <text x="988" y="700" font-size="16" fill="#e8eefc" font-weight="700" text-anchor="start" font-family="&apos;Cascadia Code&apos;,&apos;SFMono-Regular&apos;,Consolas,&apos;Courier New&apos;,monospace">create-order</text>
+  <text x="988" y="726" font-size="13.5" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">→ cancel-order 撤单</text>
+  <text x="988" y="745" font-size="13.5" fill="#93a7c6" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">端到端已实测闭合</text>
+  <line x1="316" y1="722" x2="358" y2="722" stroke="#263a5c" stroke-width="2.5" marker-end="url(#ah)"/>
+  <line x1="620" y1="722" x2="662" y2="722" stroke="#263a5c" stroke-width="2.5" marker-end="url(#ah)"/>
+  <line x1="924" y1="722" x2="966" y2="722" stroke="#263a5c" stroke-width="2.5" marker-end="url(#ah)"/>
+  <line x1="60" y1="806" x2="1220" y2="806" stroke="#263a5c" stroke-width="1"/>
+  <text x="60" y="826" font-size="14" fill="#5f7291" font-weight="400" text-anchor="start" font-family="&apos;Segoe UI&apos;,&apos;PingFang SC&apos;,&apos;Microsoft YaHei&apos;,&apos;Hiragino Sans GB&apos;,sans-serif">仓库内 examples/real-menu-1450713.json 为真实门店快照（121 项），不联网可离线复现同一结果</text>
+</svg>
