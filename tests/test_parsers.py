@@ -112,6 +112,16 @@ class TestCouponParsing(unittest.TestCase):
         coupons = parse_available_coupons(text)
         self.assertEqual(coupons[0].kind, "threshold_off")
 
+    def test_instant_off_not_misread_as_fixed_price(self):
+        """'立减5元' 是减 5 元, 不是"只需付 5 元"——不能被 'N元' 规则当成固定价。"""
+        cases = {"新客立减5元": 5.0, "到店立减5元": 5.0, "下单立减10元": 10.0}
+        for title, expected in cases.items():
+            text = f"### 麦麦省优惠券列表：\n- 优惠券标题：{title} \\\n  状态：可领取 \\\n"
+            coupon = parse_available_coupons(text)[0]
+            self.assertEqual(coupon.kind, "threshold_off", title)
+            self.assertAlmostEqual(coupon.threshold, 0.0, msg=title)
+            self.assertAlmostEqual(coupon.price, expected, msg=title)
+
 
 class TestMenuNormalization(unittest.TestCase):
     def test_flat_list(self):

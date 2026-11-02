@@ -95,6 +95,9 @@ _PERCENT_RE = re.compile(r"(\d+(?:\.\d+)?)\s*折")
 _THRESHOLD_OFF_RE = re.compile(
     r"满\s*(\d+(?:\.\d+)?)\s*元?\s*减\s*(\d+(?:\.\d+)?)\s*元?"
 )
+# "立减5元" / "到店立减5元": 无门槛减额。没有"满"字, 语义是减 5 元,
+# 不是"只需付 5 元"。下面用它把这类券归为 threshold=0 的满减券。
+_INSTANT_OFF_RE = re.compile(r"减\s*(\d+(?:\.\d+)?)\s*元?")
 
 
 def parse_my_coupons_markdown(text: str) -> list[Coupon]:
@@ -166,6 +169,20 @@ def _classify_coupon(title: str, body: str, tags: list[str]) -> Coupon:
 
     if "买一送一" in title:
         return Coupon(title=title, kind="bogo", scope=scope, tags=tags)
+
+    # "立减5元" / "到店立减5元": 无门槛减额券, 不是"只需付 5 元"。
+    # 满减已在上面匹配; 这里把没有"满"字的减额券归为 threshold=0 的满减,
+    # 否则会被下面的 "N元" 规则误判成固定价, 把 33.5 元的餐算成 5 元。
+    m = _INSTANT_OFF_RE.search(title)
+    if m:
+        return Coupon(
+            title=title,
+            kind="threshold_off",
+            threshold=0.0,
+            price=float(m.group(1)),
+            scope=scope,
+            tags=tags,
+        )
 
     if title.startswith("免费") or "免费" in title:
         return Coupon(title=title, kind="free_item", scope=scope, tags=tags)
